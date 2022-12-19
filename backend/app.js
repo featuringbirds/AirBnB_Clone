@@ -9,7 +9,6 @@ const routes = require('./routes');
 
 const app = express();
 
-app.use(routes);
 
 
 const { environment } = require('./config');
@@ -25,15 +24,15 @@ app.use(express.json());
 
 // Security Middleware
 if (!isProduction) {
-    // enables cors only in development
-    app.use(cors());
-  }
+  // enables cors only in development
+  app.use(cors());
+}
 
-  // helmet helps set a variety of headers to better secure your app
-  app.use(
-    helmet.crossOriginResourcePolicy({
-      policy: "cross-origin"
-    })
+// helmet helps set a variety of headers to better secure your app
+app.use(
+  helmet.crossOriginResourcePolicy({
+    policy: "cross-origin"
+  })
   );
 
   // Sets the _csrf token and create req.csrfToken method
@@ -47,5 +46,6 @@ if (!isProduction) {
     })
   );
 
+  app.use(routes);
 
   module.exports = app;
